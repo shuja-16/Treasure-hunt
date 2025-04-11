@@ -1,9 +1,10 @@
 Welcome to Treasure Hunt Tactics – a strategic grid-based game where every move counts!
 Your goal? Find all the hidden treasures without falling into traps, and do it before you run out of turns!
+
 Controls:
- •	Arrow Keys (↑ ↓ ← →) – Move your player up, down, left, or right.
- •	H Key (H) – Use a hint to locate the nearest treasure (limited to 3 hints per game).
- •	Close Window or Press Esc – To exit the game.
+  - Arrow Keys (↑ ↓ ← →) – Move your player up, down, left, or right.
+  - H Key (H) – Use a hint to locate the nearest treasure (limited to 3 hints per game).
+  - Close Window or Press Esc – To exit the game.
 Game Rules:
  1.	Grid Size: The game is played on a 10x10 grid.
  2.	Start Point: You always start from the top-left corner (0,0).
