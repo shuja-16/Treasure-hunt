@@ -1,4 +1,3 @@
-
 Welcome to Treasure Hunt Tactics – a strategic grid-based game where every move counts!
 Your goal? Find all the hidden treasures without falling into traps, and do it before you run out of turns!
 🎮 Controls
