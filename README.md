@@ -12,7 +12,7 @@ Game Rules:
   - Stepping on a treasure gives you +1 score.
  4.	Traps:
   -	There are 7 traps scattered randomly.
-  -	If you land on one, you’re teleported back to the start. 🪤😖
+  -	If you land on one, you’re teleported back to the start.
  5.	Turns: You have a total of 30 turns to collect all treasures.
  6.	Hints:
   -	You get 3 hints per game.
