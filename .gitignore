@@ -1,0 +1,28 @@
+# Bytecode / Python junk
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Editor / IDE files
+.vscode/
+*.swp
+*.swo
+*.bak
+*.tmp
+*.log
+
+# Mac and Windows OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# PyInstaller build artifacts
+build/
+dist/
+*.spec
+
+# Virtual environment (optional)
+env/
+venv/
+ENV/
