@@ -343,20 +343,24 @@ class Game:
         self.rival.reset()
         self.trap_agent.load_model()
         self.treasures = self._generate_items(5)
-        self.traps = self._generate_items(3)
+        #making sure that the trap doesnt spawn at the treasure
+        self.traps = self._generate_items(3, exclude=self.treasures)
         self.revealed_treasures = set()
         self.revealed_traps = set()
         self.start_time = pygame.time.get_ticks()
         self.time_left = 60
         self.message = ""
     
-    def _generate_items(self, count):
+    def _generate_items(self, count, exclude=None):
         items = set()
+        if exclude is None:
+            exclude = []
         while len(items) < count:
             x = random.randint(0, GRID_SIZE - 1)
             y = random.randint(0, GRID_SIZE - 1)
-            if (x, y) != (0, 0):
-                items.add((x, y))
+            pos = (x, y)
+            if pos != (0, 0) and pos not in exclude:
+                items.add(pos)
         return list(items)
     
     def is_terminal_state(self):
