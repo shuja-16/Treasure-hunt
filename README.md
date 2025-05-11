@@ -1,25 +1,37 @@
-Welcome to Treasure Hunt Tactics – a strategic grid-based game where every move counts!
-Your goal? Find all the hidden treasures without falling into traps, and do it before you run out of turns!
+# Treasure Hunt Game
 
-Controls:
-  - Arrow Keys (↑ ↓ ← →) – Move your player up, down, left, or right.
-  - H Key (H) – Use a hint to locate the nearest treasure (limited to 3 hints per game).
-  - Close Window or Press Esc – To exit the game.
+A Python-based treasure hunting game with AI opponents, built using Pygame. Navigate through levels, collect treasures, and avoid traps in this strategic adventure!
 
-Game Rules:
- 1.	Grid Size: The game is played on a 10x10 grid.
- 2.	Start Point: You always start from the top-left corner (0,0).
- 3.	Treasures:
-  - There are 5 treasures hidden on the grid.
-  - Stepping on a treasure gives you +1 score.
- 4.	Traps:
-  -	There are 7 traps scattered randomly.
-  -	If you land on one, you’re teleported back to the start.
- 5.	Turns: You have a total of 30 turns to collect all treasures.
- 6.	Hints:
-  -	You get 3 hints per game.
-  -	Each hint tells you how far (rows and columns) the nearest unrevealed treasure is.
- 7.	AI Brain: The game uses Minimax with Alpha-Beta Pruning to calculate the smartest move paths under the hood – but you're still in control unless AI automation is enabled.
- 8.	Winning: Collect all treasures before you run out of turns!
- 9.	Losing: Game ends if you run out of turns – your final score is shown in the console.
+## Features
+- **Two Challenging Levels**:
+  - Level 1: Single-player treasure hunt
+  - Level 2: Compete against an AI rival
+- **Smart AI Opponents**:
+  - RL-based trap placement system
+  - Minimax algorithm for rival AI
+- **Dark Theme UI** with smooth animations
+- **Sound Effects** for immersive gameplay
+- **Time-based Challenge** with countdown timer
 
+## Requirements
+- Python 3.6+
+- Pygame
+- NumPy
+- scikit-learn
+
+## Quick Start
+1. Clone the repo:
+   ```bash
+   git clone (link)
+   cd treasure-hunt
+
+## Requirements
+pip install pygame numpy scikit-learn
+
+## Run the game
+python treasure_hunt.py
+
+## Controls
+In-game: Arrow keys to move
+Menus: Mouse clicks
+Game Over: Press R to restart or Q to quit
