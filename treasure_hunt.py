@@ -19,6 +19,8 @@ WIDTH = 580
 HEIGHT = 580
 HUD_HEIGHT = 100
 FPS = 10
+GRID_OFFSET_X = (WIDTH - GRID_WIDTH) // 2
+GRID_OFFSET_Y = (HEIGHT - GRID_HEIGHT) // 2
 
 # Colors
 WHITE = (245, 245, 245)
@@ -29,6 +31,7 @@ GREEN = (50, 200, 50)
 DARK_GRAY = (50, 50, 50)
 YELLOW = (255, 255, 0)
 GRAY = (150, 150, 150)
+SKIN_COLOR = (255, 224, 189)
 
 # Game states
 class GameState(Enum):
@@ -65,9 +68,16 @@ def load_and_scale_image(path):
         return surface
 
 # Load assets
-player_img = load_and_scale_image("assets/player.png")
+player_img = load_and_scale_image("assets/player2.png")
 treasure_img = load_and_scale_image("assets/treasure.png")
 trap_img = load_and_scale_image("assets/trap.png")
+
+try:
+    background_img = pygame.image.load("assets/background.png")
+    background_img = pygame.transform.scale(background_img, (WIDTH, HEIGHT))
+except:
+    background_img = pygame.Surface((WIDTH, HEIGHT))
+    background_img.fill((34, 139, 34))  # fallback green background
 
 # Load sounds
 try:
@@ -75,10 +85,10 @@ try:
     found_sound = pygame.mixer.Sound("assets/found.wav")
     trap_sound = pygame.mixer.Sound("assets/trap.wav")
 except:
-    # Create dummy sounds if files not found
     click_sound = pygame.mixer.Sound(buffer=bytearray(100))
     found_sound = pygame.mixer.Sound(buffer=bytearray(100))
     trap_sound = pygame.mixer.Sound(buffer=bytearray(100))
+
 
 class Player:
     def __init__(self):
@@ -326,6 +336,7 @@ class Game:
         self.game_state = GameState.MENU
         self.message = ""
         self.reset()
+        self.level = 1
         
     def reset(self):
         self.player.reset()
@@ -398,22 +409,23 @@ class Game:
     
     def draw(self):
         # Draw background
-        screen.fill(DARK_GRAY)
+        screen.blit(background_img, (0, 0))
         
         # Draw grid
         for x in range(GRID_SIZE):
             for y in range(GRID_SIZE):
-                rect = pygame.Rect(
-                    (WIDTH - GRID_WIDTH) // 2 + x * (TILE_SIZE + TILE_GAP),
-                    (HEIGHT - GRID_HEIGHT) // 2 + y * (TILE_SIZE + TILE_GAP),
-                    TILE_SIZE, TILE_SIZE
-                )
-                pygame.draw.rect(screen, (240, 230, 200), rect, border_radius=5)
-                
-                # Highlight nearby traps
-                if (x, y) in self.traps and (x, y) not in self.revealed_traps:
-                    if abs(x - self.player.x) <= 1 and abs(y - self.player.y) <= 1:
-                        pygame.draw.rect(screen, (200, 100, 100), rect, 2, border_radius=5)
+                rect_x = GRID_OFFSET_X + x * (TILE_SIZE + TILE_GAP)
+                rect_y = GRID_OFFSET_Y + y * (TILE_SIZE + TILE_GAP)
+                tile_rect = pygame.Rect(rect_x, rect_y, TILE_SIZE, TILE_SIZE)
+                shadow_rect = tile_rect.move(4, 4)
+                pygame.draw.rect(screen, (0, 0, 0, 60), shadow_rect, border_radius=12)
+                pygame.draw.rect(screen, (240, 230, 200), tile_rect, border_radius=12)
+
+                if (x, y) in self.traps:
+                    neighbors = [(x+dx, y+dy) for dx in (-1, 0, 1) for dy in (-1, 0, 1)
+                                 if (dx != 0 or dy != 0) and 0 <= x+dx < GRID_SIZE and 0 <= y+dy < GRID_SIZE]
+                    if (self.player.x, self.player.y) in neighbors:
+                        pygame.draw.rect(screen, RED, tile_rect, 2, border_radius=12)
         
         # Draw game elements
         for tx, ty in self.revealed_treasures:
@@ -519,6 +531,7 @@ def main():
             
         elif game.game_state == GameState.PLAYING:
             game.draw()
+            draw_text("Level 1", WIDTH // 2 - 40, GRID_OFFSET_Y - 50, SKIN_COLOR)
             
         elif game.game_state == GameState.GAME_OVER:
             screen.fill(DARK_GRAY)
