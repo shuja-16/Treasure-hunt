@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
+*.pkl
 
 # Editor / IDE files
 .vscode/
@@ -26,3 +27,4 @@ dist/
 env/
 venv/
 ENV/
+
