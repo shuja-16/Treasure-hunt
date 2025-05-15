@@ -53,6 +53,7 @@ class GameState(Enum):
     GAME_OVER = 2
     LEVEL_COMPLETE = 3
     CONGRATULATIONS = 4
+    LEVEL_SELECT = 5 
 
 # === Initialize Pygame ===
 pygame.init()
@@ -555,7 +556,7 @@ def main():
                 running = False
                 
             if game.game_state == GameState.MENU:
-                if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+                if event.type == pygame.KEYDOWN:
                     game.game_state = GameState.PLAYING
                     click_sound.play()
                     
@@ -619,11 +620,14 @@ def main():
             btn_y = HEIGHT//2 + 100
             if draw_button("START GAME", WIDTH//2 - 100, btn_y, 200, 45, BUTTON_COLOR, BUTTON_HOVER, ACCENT_COLOR):
                 game.game_state = GameState.PLAYING
+
+            if draw_button("LEVEL SELECT", WIDTH//2 - 100, btn_y + 60, 200, 45, BUTTON_COLOR, BUTTON_HOVER, ACCENT_COLOR):
+                game.game_state = GameState.LEVEL_SELECT
                 
-            if draw_button("QUIT", WIDTH//2 - 100, btn_y + 70, 200, 45, BUTTON_COLOR, BUTTON_HOVER, RED):
+            if draw_button("QUIT", WIDTH//2 - 100, btn_y + 120, 200, 45, BUTTON_COLOR, BUTTON_HOVER, RED):
                 running = False
                 
-            draw_text("Use arrow keys to move", WIDTH//2, HEIGHT - 50, SECONDARY_COLOR, 20, "regular", True)
+            draw_text("Use arrow keys to move", WIDTH//2, HEIGHT + 10, SECONDARY_COLOR, 20, "regular", True)
         elif game.game_state == GameState.PLAYING:
             game.draw()
             draw_text(f"Level {game.level}", WIDTH // 2, GRID_OFFSET_Y - 50, SKIN_COLOR, 30, "regular", True)
@@ -639,6 +643,26 @@ def main():
             if alpha == 255:
                 game.game_state = GameState.CONGRATULATIONS
                 game.transition_timer = current_time
+
+        elif game.game_state == GameState.LEVEL_SELECT:
+                draw_animated_background()
+    
+                draw_text("CHOOSE A LEVEL", WIDTH//2, HEIGHT//2 - 100, ACCENT_COLOR, 40, "title", True)
+
+                btn_y = HEIGHT//2 - 20
+                if draw_button("LEVEL 1", WIDTH//2 - 110, btn_y, 220, 50, BUTTON_COLOR, BUTTON_HOVER, ACCENT_COLOR):
+                    game.level = 1
+                    game.reset()
+                    game.game_state = GameState.PLAYING
+
+                if draw_button("LEVEL 2", WIDTH//2 - 110, btn_y + 70, 220, 50, BUTTON_COLOR, BUTTON_HOVER, ACCENT_COLOR):
+                    game.level = 2
+                    game.reset()
+                    game.game_state = GameState.PLAYING
+
+                # Back button
+                if draw_button("BACK", WIDTH//2 - 110, btn_y + 150, 220, 45, BUTTON_COLOR, BUTTON_HOVER, RED):
+                    game.game_state = GameState.MENU
                 
         elif game.game_state == GameState.CONGRATULATIONS:
             # Congratulations screen before level 2
